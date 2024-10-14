@@ -1,0 +1,49 @@
+az config set core.encrypt_token_cache=false
+
+az account clear
+
+az login
+
+az account tenant list
+
+az account show
+
+az login --scope https://graph.microsoft.com//.default
+
+az account set --subscription c09e0f60-cb15-4c23-8500-eeae1ec9dd6b
+
+az login
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
