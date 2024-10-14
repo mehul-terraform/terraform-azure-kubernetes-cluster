@@ -45,5 +45,5 @@ resource   "azurerm_subnet" "GatewaySubnet" {
    name   =   "GatewaySubnet" 
    resource_group_name   =    azurerm_resource_group.project-az-rg01.name 
    virtual_network_name   =   azurerm_virtual_network.project-az-vnet01.name 
-   address_prefixes   =   ["192.168.254.0/24"]
+   address_prefixes   =   ["192.168.255.0/24"]
 }

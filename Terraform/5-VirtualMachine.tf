@@ -65,8 +65,9 @@ resource "azurerm_linux_virtual_machine" "project-az-masternode01" {
 
   provisioner "remote-exec" {
     inline = [
+      "sudo apt install net-tools" ,
       "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_masternode01.sh",
-      "sudo sh k8s_cluster_masternode01.sh"
+      "sudo sh k8s_cluster_masternode01.sh" ,
       
     ]
   }
@@ -163,7 +164,8 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode01" {
 
   provisioner "remote-exec" {
     inline = [
-      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode01.sh",
+      "sudo apt install net-tools" ,
+      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode01.sh" ,
       "sudo sh k8s_cluster_workernode01.sh" ,
      
     ]
@@ -262,7 +264,8 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode02" {
 
   provisioner "remote-exec" {
     inline = [
-      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode02.sh",
+      "sudo apt install net-tools" ,
+      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode02.sh" ,
       "sudo sh k8s_cluster_workernode02.sh" ,
       
     ]
@@ -361,7 +364,8 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
 
   provisioner "remote-exec" {
     inline = [
-      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode03.sh",
+      "sudo apt install net-tools" ,
+      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode03.sh" ,
       "sudo sh k8s_cluster_workernode03.sh" ,
       
     ]
