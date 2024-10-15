@@ -225,7 +225,7 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode02" {
       "sudo sh k8s_cluster_workernode02.sh",
     ]
   }
-tags = {
+  tags = {
     Name = "project-az-workernode02"
   }
 
