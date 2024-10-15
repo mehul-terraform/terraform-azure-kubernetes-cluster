@@ -2,7 +2,6 @@
 # MasterNode-01
 
 #Define Public IP....................
-
 resource "azurerm_public_ip" "project-az-masternode01-ip" {
   name                = "project-az-masternode01-ip"
   location            = azurerm_resource_group.project-az-rg01.location
@@ -12,11 +11,9 @@ resource "azurerm_public_ip" "project-az-masternode01-ip" {
   tags = {
     Name = "project-az-masternode01-ip"
   }
-
 }
 
 #Define network_interface..............
-
 resource "azurerm_network_interface" "project-az-masternode01" {
   name                = "project-az-masternode01"
   location            = azurerm_resource_group.project-az-rg01.location
@@ -26,18 +23,16 @@ resource "azurerm_network_interface" "project-az-masternode01" {
     name                          = "project-az-masternode01"
     subnet_id                     = azurerm_subnet.project-az-vm.id
     private_ip_address_allocation = "Static"
-	private_ip_address            = "192.168.1.11"
+	  private_ip_address            = "192.168.1.11"
     public_ip_address_id          = azurerm_public_ip.project-az-masternode01-ip.id
   }
   
    tags = {
     Name = "project-az-masternode01"
   }
-
 }
 
 #ConfigureVirtualMachine...............
-
 resource "azurerm_linux_virtual_machine" "project-az-masternode01" {
   name                = "project-az-masternode01"
   resource_group_name = azurerm_resource_group.project-az-rg01.name
@@ -47,7 +42,7 @@ resource "azurerm_linux_virtual_machine" "project-az-masternode01" {
   admin_username      = "myadmin"
   admin_password      = "Admin@123456"
   network_interface_ids = [
-    azurerm_network_interface.project-az-masternode01.id,
+  azurerm_network_interface.project-az-masternode01.id,
   ]
   source_image_reference {
     publisher = "Canonical"
@@ -55,88 +50,70 @@ resource "azurerm_linux_virtual_machine" "project-az-masternode01" {
     sku       = "22_04-lts"
     version   = "latest"
   }
-
   connection {
     type     = "ssh"
     user     = "myadmin"
     password = "Admin@123456"
     host     = self.public_ip_address
   }
-
   provisioner "remote-exec" {
     inline = [
-      "sudo apt install net-tools" ,
       "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_masternode01.sh",
-      "sudo sh k8s_cluster_masternode01.sh" ,
-      
+      "sudo sh k8s_cluster_masternode01.sh",
     ]
   }
-  
-  tags = {
+    tags = {
     Name = "project-az-masternode01"
   }
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
-
 }
-
   resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-masternode01" {
   location              = azurerm_resource_group.project-az-rg01.location
   virtual_machine_id    = azurerm_linux_virtual_machine.project-az-masternode01.id
   enabled               = true
   daily_recurrence_time = "1900"  # Time in HHmm format
   timezone              = "Pacific Standard Time"
-
   notification_settings {
     enabled          = true
     time_in_minutes  = 60
     webhook_url      = "https://example.com/webhook"
   }
-
 }
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # WorkerNode-01
 
 #Define Public IP....................
-
 resource "azurerm_public_ip" "project-az-workernode01-ip" {
   name                = "project-az-workernode01-ip"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
   allocation_method   = "Dynamic"
-
   tags = {
     environment = "project-az-workernode01-ip"
   }
-
 }
 
 #Define network_interface..............
-
 resource "azurerm_network_interface" "project-az-workernode01" {
   name                = "project-az-workernode01"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
-
   ip_configuration {
     name                          = "project-az-workernode01"
     subnet_id                     = azurerm_subnet.project-az-vm.id
     private_ip_address_allocation = "Static"
-	private_ip_address            = "192.168.1.12"
+  	private_ip_address            = "192.168.1.12"
     public_ip_address_id          = azurerm_public_ip.project-az-workernode01-ip.id
   }
-  
   tags = {
     Name = "project-az-workernode01"
   }
-  
 }
 
 #ConfigureVirtualMachine...............
-
 resource "azurerm_linux_virtual_machine" "project-az-workernode01" {
   name                = "project-az-workernode01"
   resource_group_name = azurerm_resource_group.project-az-rg01.name
@@ -154,89 +131,71 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode01" {
     sku       = "22_04-lts"
     version   = "latest"
   }
-
   connection {
     type     = "ssh"
     user     = "myadmin"
     password = "Admin@123456"
     host     = self.public_ip_address
   }
-
   provisioner "remote-exec" {
     inline = [
-      "sudo apt install net-tools" ,
-      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode01.sh" ,
-      "sudo sh k8s_cluster_workernode01.sh" ,
-     
+      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode01.sh",
+      "sudo sh k8s_cluster_workernode01.sh",
     ]
   }
-
   tags = {
     Name = "project-az-workernode01"
   }
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
-
 }
-
   resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode01" {
   location              = azurerm_resource_group.project-az-rg01.location
   virtual_machine_id    = azurerm_linux_virtual_machine.project-az-workernode01.id
   enabled               = true
   daily_recurrence_time = "1900"  # Time in HHmm format
   timezone              = "Pacific Standard Time"
-
     notification_settings {
     enabled          = true
     time_in_minutes  = 60
     webhook_url      = "https://example.com/webhook"
   }
-
 }
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # WorkerNode-02
 
 #Define Public IP....................
-
 resource "azurerm_public_ip" "project-az-workernode02-ip" {
   name                = "project-az-workernode02-ip"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
   allocation_method   = "Dynamic"
-
   tags = {
     environment = "project-az-workernode02-ip"
   }
-
 }
 
 #Define network_interface..............
-
 resource "azurerm_network_interface" "project-az-workernode02" {
   name                = "project-az-workernode02"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
-
   ip_configuration {
     name                          = "project-az-workernode02"
     subnet_id                     = azurerm_subnet.project-az-vm.id
     private_ip_address_allocation = "Static"
-	private_ip_address            = "192.168.1.13"
+	  private_ip_address            = "192.168.1.13"
     public_ip_address_id          = azurerm_public_ip.project-az-workernode02-ip.id
   }
-  
   tags = {
     Name = "project-az-workernode02"
   }
-
 }
 
 #ConfigureVirtualMachine...............
-
 resource "azurerm_linux_virtual_machine" "project-az-workernode02" {
   name                = "project-az-workernode02"
   resource_group_name = azurerm_resource_group.project-az-rg01.name
@@ -254,23 +213,18 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode02" {
     sku       = "22_04-lts"
     version   = "latest"
   }
-
   connection {
     type     = "ssh"
     user     = "myadmin"
     password = "Admin@123456"
     host     = self.public_ip_address
   }
-
   provisioner "remote-exec" {
     inline = [
-      "sudo apt install net-tools" ,
-      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode02.sh" ,
-      "sudo sh k8s_cluster_workernode02.sh" ,
-      
+      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode02.sh",
+      "sudo sh k8s_cluster_workernode02.sh",
     ]
   }
-
 tags = {
     Name = "project-az-workernode02"
   }
@@ -279,35 +233,29 @@ tags = {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
-
 }
-
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode02" {
   location              = azurerm_resource_group.project-az-rg01.location
   virtual_machine_id    = azurerm_linux_virtual_machine.project-az-workernode02.id
   enabled               = true
   daily_recurrence_time = "1900"  # Time in HHmm format
   timezone              = "Pacific Standard Time"
-
   notification_settings {
     enabled          = true
     time_in_minutes  = 60
     webhook_url      = "https://example.com/webhook"
   }
-
 }
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # WorkerNode-03
 
 #Define Public IP....................
-
 resource "azurerm_public_ip" "project-az-workernode03-ip" {
   name                = "project-az-workernode03-ip"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
   allocation_method   = "Dynamic"
-
   tags = {
     Name = "project-az-workernode03-ip"
   }
@@ -315,20 +263,17 @@ resource "azurerm_public_ip" "project-az-workernode03-ip" {
 }
 
 #Define network_interface..............
-
 resource "azurerm_network_interface" "project-az-workernode03" {
   name                = "project-az-workernode03"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
-
   ip_configuration {
     name                          = "project-az-workernode03"
     subnet_id                     = azurerm_subnet.project-az-vm.id
     private_ip_address_allocation = "Static"
-	private_ip_address            = "192.168.1.14"
+	  private_ip_address            = "192.168.1.14"
     public_ip_address_id          = azurerm_public_ip.project-az-workernode03-ip.id
   }
-  
    tags = {
     Name = "project-az-workernode03"
   }
@@ -336,7 +281,6 @@ resource "azurerm_network_interface" "project-az-workernode03" {
 }
 
 #ConfigureVirtualMachine...............
-
 resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
   name                = "project-az-workernode03"
   resource_group_name = azurerm_resource_group.project-az-rg01.name
@@ -346,7 +290,7 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
   admin_username      = "myadmin"
   admin_password      = "Admin@123456"
   network_interface_ids = [
-    azurerm_network_interface.project-az-workernode03.id,
+  azurerm_network_interface.project-az-workernode03.id,
   ]
   source_image_reference {
     publisher = "Canonical"
@@ -364,10 +308,8 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt install net-tools" ,
-      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode03.sh" ,
-      "sudo sh k8s_cluster_workernode03.sh" ,
-      
+      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode03.sh",
+      "sudo sh k8s_cluster_workernode03.sh",
     ]
   }
   
@@ -379,22 +321,18 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
-
 }
-
   resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode03" {
   location              = azurerm_resource_group.project-az-rg01.location
   virtual_machine_id    = azurerm_linux_virtual_machine.project-az-workernode03.id
   enabled               = true
   daily_recurrence_time = "1900"  # Time in HHmm format
   timezone              = "Pacific Standard Time"
-
   notification_settings {
     enabled          = true
     time_in_minutes  = 60
     webhook_url      = "https://example.com/webhook"
   }
-
 }
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
