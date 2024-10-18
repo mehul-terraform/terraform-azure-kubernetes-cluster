@@ -259,7 +259,6 @@ resource "azurerm_public_ip" "project-az-workernode03-ip" {
   tags = {
     Name = "project-az-workernode03-ip"
   }
-
 }
 
 #Define network_interface..............
@@ -277,7 +276,6 @@ resource "azurerm_network_interface" "project-az-workernode03" {
    tags = {
     Name = "project-az-workernode03"
   }
-
 }
 
 #ConfigureVirtualMachine...............
@@ -340,7 +338,7 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
 
 #Define Public IP....................
 
-/*resource "azurerm_public_ip" "project-az-workernode04-ip" {
+resource "azurerm_public_ip" "project-az-workernode04-ip" {
   name                = "project-az-workernode04-ip"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
@@ -349,7 +347,6 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
   tags = {
     Name = "project-az-workernode04-ip"
   }
-
 }
 
 #Define network_interface..............
@@ -370,7 +367,6 @@ resource "azurerm_network_interface" "project-az-workernode04" {
    tags = {
     Name = "project-az-workernode04"
   }
-
 }
 
 #ConfigureVirtualMachine...............
@@ -437,7 +433,6 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode04
     time_in_minutes  = 60
     webhook_url      = "https://example.com/webhook"
   }
-
-}*/
+}
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------
