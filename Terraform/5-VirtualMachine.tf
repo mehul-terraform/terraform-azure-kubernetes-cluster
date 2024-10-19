@@ -433,6 +433,6 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode04
     time_in_minutes  = 60
     webhook_url      = "https://example.com/webhook"
   }
-}
+}*/
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------
