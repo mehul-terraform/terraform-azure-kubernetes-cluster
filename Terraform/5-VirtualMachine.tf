@@ -168,7 +168,7 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode01" {
 # WorkerNode-02
 
 #Define Public IP....................
-/*resource "azurerm_public_ip" "project-az-workernode02-ip" {
+resource "azurerm_public_ip" "project-az-workernode02-ip" {
   name                = "project-az-workernode02-ip"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
@@ -433,6 +433,6 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode04
     time_in_minutes  = 60
     webhook_url      = "https://example.com/webhook"
   }
-}*/
+}
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------
