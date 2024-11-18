@@ -87,6 +87,7 @@ resource "azurerm_linux_virtual_machine" "project-az-masternode01" {
 
 #Define Public IP....................
 resource "azurerm_public_ip" "project-az-workernode01-ip" {
+  depends_on          = [azurerm_linux_virtual_machine.project-az-masternode01]
   name                = "project-az-workernode01-ip"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
@@ -107,6 +108,7 @@ resource "azurerm_network_interface" "project-az-workernode01" {
     private_ip_address_allocation = "Static"
   	private_ip_address            = "172.20.1.11"
     public_ip_address_id          = azurerm_public_ip.project-az-workernode01-ip.id
+    
   }
   tags = {
     Name = "project-az-workernode01"
@@ -169,6 +171,7 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode01" {
 
 #Define Public IP....................
 resource "azurerm_public_ip" "project-az-workernode02-ip" {
+  depends_on          = [azurerm_linux_virtual_machine.project-az-masternode01]
   name                = "project-az-workernode02-ip"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
@@ -252,6 +255,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode02
 
 #Define Public IP....................
 resource "azurerm_public_ip" "project-az-workernode03-ip" {
+  depends_on          = [azurerm_linux_virtual_machine.project-az-masternode01]
   name                = "project-az-workernode03-ip"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
@@ -339,6 +343,7 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
 #Define Public IP....................
 
 resource "azurerm_public_ip" "project-az-workernode04-ip" {
+  depends_on          = [azurerm_linux_virtual_machine.project-az-masternode01]
   name                = "project-az-workernode04-ip"
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
