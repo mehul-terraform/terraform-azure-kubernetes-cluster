@@ -251,7 +251,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode02
 }
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# WorkerNode-03
+# # WorkerNode-03
 
 #Define Public IP....................
 resource "azurerm_public_ip" "project-az-workernode03-ip" {
@@ -265,82 +265,82 @@ resource "azurerm_public_ip" "project-az-workernode03-ip" {
   }
 }
 
-#Define network_interface..............
-resource "azurerm_network_interface" "project-az-workernode03" {
-  name                = "project-az-workernode03"
-  location            = azurerm_resource_group.project-az-rg01.location
-  resource_group_name = azurerm_resource_group.project-az-rg01.name
-  ip_configuration {
-    name                          = "project-az-workernode03"
-    subnet_id                     = azurerm_subnet.project-az-vm.id
-    private_ip_address_allocation = "Static"
-	  private_ip_address            = "172.20.1.13"
-    public_ip_address_id          = azurerm_public_ip.project-az-workernode03-ip.id
-  }
-   tags = {
-    Name = "project-az-workernode03"
-  }
-}
+# #Define network_interface..............
+# resource "azurerm_network_interface" "project-az-workernode03" {
+#   name                = "project-az-workernode03"
+#   location            = azurerm_resource_group.project-az-rg01.location
+#   resource_group_name = azurerm_resource_group.project-az-rg01.name
+#   ip_configuration {
+#     name                          = "project-az-workernode03"
+#     subnet_id                     = azurerm_subnet.project-az-vm.id
+#     private_ip_address_allocation = "Static"
+# 	  private_ip_address            = "172.20.1.13"
+#     public_ip_address_id          = azurerm_public_ip.project-az-workernode03-ip.id
+#   }
+#    tags = {
+#     Name = "project-az-workernode03"
+#   }
+# }
 
-#ConfigureVirtualMachine...............
-resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
-  name                = "project-az-workernode03"
-  resource_group_name = azurerm_resource_group.project-az-rg01.name
-  location            = azurerm_resource_group.project-az-rg01.location
-  size                = "Standard_B2s"
-  disable_password_authentication = false
-  admin_username      = "myadmin"
-  admin_password      = "Admin@123456"
-  network_interface_ids = [
-  azurerm_network_interface.project-az-workernode03.id,
-  ]
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
-    version   = "latest"
-  }
+# #ConfigureVirtualMachine...............
+# resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
+#   name                = "project-az-workernode03"
+#   resource_group_name = azurerm_resource_group.project-az-rg01.name
+#   location            = azurerm_resource_group.project-az-rg01.location
+#   size                = "Standard_B2s"
+#   disable_password_authentication = false
+#   admin_username      = "myadmin"
+#   admin_password      = "Admin@123456"
+#   network_interface_ids = [
+#   azurerm_network_interface.project-az-workernode03.id,
+#   ]
+#   source_image_reference {
+#     publisher = "Canonical"
+#     offer     = "0001-com-ubuntu-server-jammy"
+#     sku       = "22_04-lts"
+#     version   = "latest"
+#   }
 
-  connection {
-    type     = "ssh"
-    user     = "myadmin"
-    password = "Admin@123456"
-    host     = self.public_ip_address
-  }
+#   connection {
+#     type     = "ssh"
+#     user     = "myadmin"
+#     password = "Admin@123456"
+#     host     = self.public_ip_address
+#   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode03.sh",
-      "sudo sh k8s_cluster_workernode03.sh",
-    ]
-  }
+#   provisioner "remote-exec" {
+#     inline = [
+#       "wget https://raw.githubusercontent.com/Mehul-Kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode03.sh",
+#       "sudo sh k8s_cluster_workernode03.sh",
+#     ]
+#   }
   
-  tags = {
-    Name = "project-az-workernode03"
-  }
+#   tags = {
+#     Name = "project-az-workernode03"
+#   }
 
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-}
-  resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode03" {
-  location              = azurerm_resource_group.project-az-rg01.location
-  virtual_machine_id    = azurerm_linux_virtual_machine.project-az-workernode03.id
-  enabled               = true
-  daily_recurrence_time = "1900"  # Time in HHmm format
-  timezone              = "Pacific Standard Time"
-  notification_settings {
-    enabled          = true
-    time_in_minutes  = 60
-    webhook_url      = "https://example.com/webhook"
-  }
-}
+#   os_disk {
+#     caching              = "ReadWrite"
+#     storage_account_type = "Standard_LRS"
+#   }
+# }
+#   resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode03" {
+#   location              = azurerm_resource_group.project-az-rg01.location
+#   virtual_machine_id    = azurerm_linux_virtual_machine.project-az-workernode03.id
+#   enabled               = true
+#   daily_recurrence_time = "1900"  # Time in HHmm format
+#   timezone              = "Pacific Standard Time"
+#   notification_settings {
+#     enabled          = true
+#     time_in_minutes  = 60
+#     webhook_url      = "https://example.com/webhook"
+#   }
+# }
 
-#---------------------------------------------------------------------------------------------------------------------------------------------------
-# WorkerNode-04
+# #---------------------------------------------------------------------------------------------------------------------------------------------------
+# # WorkerNode-04
 
-#Define Public IP....................
+# #Define Public IP....................
 
 resource "azurerm_public_ip" "project-az-workernode04-ip" {
   depends_on          = [azurerm_linux_virtual_machine.project-az-masternode01]
@@ -349,95 +349,95 @@ resource "azurerm_public_ip" "project-az-workernode04-ip" {
   resource_group_name = azurerm_resource_group.project-az-rg01.name
   allocation_method   = "Dynamic"
 
-  tags = {
-    Name = "project-az-workernode04-ip"
-  }
-}
+#   tags = {
+#     Name = "project-az-workernode04-ip"
+#   }
+# }
 
-#Define network_interface..............
+# #Define network_interface..............
 
-resource "azurerm_network_interface" "project-az-workernode04" {
-  name                = "project-az-workernode04"
-  location            = azurerm_resource_group.project-az-rg01.location
-  resource_group_name = azurerm_resource_group.project-az-rg01.name
+# resource "azurerm_network_interface" "project-az-workernode04" {
+#   name                = "project-az-workernode04"
+#   location            = azurerm_resource_group.project-az-rg01.location
+#   resource_group_name = azurerm_resource_group.project-az-rg01.name
 
-  ip_configuration {
-    name                          = "project-az-workernode04"
-    subnet_id                     = azurerm_subnet.project-az-vm.id
-    private_ip_address_allocation = "Static"
-	  private_ip_address            = "172.20.1.14"
-    public_ip_address_id          = azurerm_public_ip.project-az-workernode04-ip.id
-  }
+#   ip_configuration {
+#     name                          = "project-az-workernode04"
+#     subnet_id                     = azurerm_subnet.project-az-vm.id
+#     private_ip_address_allocation = "Static"
+# 	  private_ip_address            = "172.20.1.14"
+#     public_ip_address_id          = azurerm_public_ip.project-az-workernode04-ip.id
+#   }
   
-   tags = {
-    Name = "project-az-workernode04"
-  }
-}
+#    tags = {
+#     Name = "project-az-workernode04"
+#   }
+# }
 
-#ConfigureVirtualMachine...............
+# #ConfigureVirtualMachine...............
 
-resource "azurerm_windows_virtual_machine" "project-az-workernode04" {
-  name                = "workernode04"
-  resource_group_name = azurerm_resource_group.project-az-rg01.name
-  location            = azurerm_resource_group.project-az-rg01.location
-  size                = "Standard_B2s"
-  admin_username      = "myadmin"
-  admin_password      = "Admin@123456"
-  network_interface_ids = [
-    azurerm_network_interface.project-az-workernode04.id,
-  ]
-  source_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2016-Datacenter"
-    version   = "latest"
-  }
+# resource "azurerm_windows_virtual_machine" "project-az-workernode04" {
+#   name                = "workernode04"
+#   resource_group_name = azurerm_resource_group.project-az-rg01.name
+#   location            = azurerm_resource_group.project-az-rg01.location
+#   size                = "Standard_B2s"
+#   admin_username      = "myadmin"
+#   admin_password      = "Admin@123456"
+#   network_interface_ids = [
+#     azurerm_network_interface.project-az-workernode04.id,
+#   ]
+#   source_image_reference {
+#     publisher = "MicrosoftWindowsServer"
+#     offer     = "WindowsServer"
+#     sku       = "2016-Datacenter"
+#     version   = "latest"
+#   }
   
-  tags = {
-    Name = "project-az-workernode04"
-  }
+#   tags = {
+#     Name = "project-az-workernode04"
+#   }
 
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
+#   os_disk {
+#     caching              = "ReadWrite"
+#     storage_account_type = "Standard_LRS"
+#   }
 
-  connection {
-    type     = "winrm"
-    user     = "myadmin"
-    password = "Admin@123456"
-    host     = self.public_ip_address
-    port     = 5986
-    https    = true
-    insecure = true
-  }
+#   connection {
+#     type     = "winrm"
+#     user     = "myadmin"
+#     password = "Admin@123456"
+#     host     = self.public_ip_address
+#     port     = 5986
+#     https    = true
+#     insecure = true
+#   }
 
-#provisioner "file" {
-#    source      = "index.html"
-#    destination = "C:/Windows"
-#  }
+# #provisioner "file" {
+# #    source      = "index.html"
+# #    destination = "C:/Windows"
+# #  }
 
-#    provisioner "remote-exec" {
-#    inline = [
-#      "echo Hello, World! > C:\\hello.txt",
-#      "mkdir C:\\example"
-#    ]
-#  }
+# #    provisioner "remote-exec" {
+# #    inline = [
+# #      "echo Hello, World! > C:\\hello.txt",
+# #      "mkdir C:\\example"
+# #    ]
+# #  }
 
-}
+# }
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode04" {
-  location              = azurerm_resource_group.project-az-rg01.location
-  virtual_machine_id    = azurerm_windows_virtual_machine.project-az-workernode04.id
-  enabled               = true
-  daily_recurrence_time = "1900"  # Time in HHmm format
-  timezone              = "Pacific Standard Time"
+# resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode04" {
+#   location              = azurerm_resource_group.project-az-rg01.location
+#   virtual_machine_id    = azurerm_windows_virtual_machine.project-az-workernode04.id
+#   enabled               = true
+#   daily_recurrence_time = "1900"  # Time in HHmm format
+#   timezone              = "Pacific Standard Time"
 
-  notification_settings {
-    enabled          = true
-    time_in_minutes  = 60
-    webhook_url      = "https://example.com/webhook"
-  }
-}
+#   notification_settings {
+#     enabled          = true
+#     time_in_minutes  = 60
+#     webhook_url      = "https://example.com/webhook"
+#   }
+# }
 
-#-------------------------------------------------------------------------------------------------------------------------------------------------------
+# #-------------------------------------------------------------------------------------------------------------------------------------------------------
