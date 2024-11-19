@@ -14,6 +14,11 @@ resource "azurerm_public_ip" "project-az-masternode01-ip" {
   }
 }
 
+  output "project-az-masternode01-ip" {
+    value = azurerm_public_ip.project-az-masternode01-ip.ip_address
+}
+
+
 # Define network_interface..............
 
 resource "azurerm_network_interface" "project-az-masternode01" {
@@ -71,6 +76,7 @@ resource "azurerm_linux_virtual_machine" "project-az-masternode01" {
     storage_account_type = "Standard_LRS"
   }
 }
+
   resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-masternode01" {
   location              = azurerm_resource_group.project-az-rg01.location
   virtual_machine_id    = azurerm_linux_virtual_machine.project-az-masternode01.id
@@ -94,9 +100,14 @@ resource "azurerm_public_ip" "project-az-workernode01-ip" {
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
   allocation_method   = "Dynamic"
+  
   tags = {
     environment = "project-az-workernode01-ip"
   }
+}
+
+  output "project-az-workernode01-ip" {
+    value = azurerm_public_ip.project-az-workernode01-ip.ip_address
 }
 
 # Define network_interface..............
@@ -184,6 +195,10 @@ resource "azurerm_public_ip" "project-az-workernode02-ip" {
   tags = {
     environment = "project-az-workernode02-ip"
   }
+}
+
+  output "project-az-workernode02-ip" {
+    value = azurerm_public_ip.project-az-workernode02-ip.ip_address
 }
 
 # Define network_interface........................................................
@@ -290,6 +305,11 @@ resource "azurerm_network_interface" "project-az-workernode03" {
     Name = "project-az-workernode03"
   }
 }
+
+  output "project-az-workernode03-ip" {
+    value = azurerm_public_ip.project-az-workernode03-ip.ip_address
+}
+
 
 # ConfigureVirtualMachine..........................................................
 
