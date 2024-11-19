@@ -14,11 +14,6 @@ resource "azurerm_public_ip" "project-az-masternode01-ip" {
   }
 }
 
-  output "project-az-masternode01-ip" {
-    value = azurerm_public_ip.project-az-masternode01-ip.ip_address
-}
-
-
 # Define network_interface..............
 
 resource "azurerm_network_interface" "project-az-masternode01" {
@@ -89,6 +84,11 @@ resource "azurerm_linux_virtual_machine" "project-az-masternode01" {
     webhook_url      = "https://example.com/webhook"
   }
 }
+
+  output "project-az-masternode01-ip" {
+    value = azurerm_public_ip.project-az-masternode01-ip.ip_address
+}
+
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # WorkerNode-01
 
@@ -104,10 +104,6 @@ resource "azurerm_public_ip" "project-az-workernode01-ip" {
   tags = {
     environment = "project-az-workernode01-ip"
   }
-}
-
-  output "project-az-workernode01-ip" {
-    value = azurerm_public_ip.project-az-workernode01-ip.ip_address
 }
 
 # Define network_interface..............
@@ -179,6 +175,10 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode01" {
     time_in_minutes  = 60
     webhook_url      = "https://example.com/webhook"
   }
+}
+
+  output "project-az-workernode01-ip" {
+    value = azurerm_public_ip.project-az-workernode01-ip.ip_address
 }
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -306,11 +306,6 @@ resource "azurerm_network_interface" "project-az-workernode03" {
   }
 }
 
-  output "project-az-workernode03-ip" {
-    value = azurerm_public_ip.project-az-workernode03-ip.ip_address
-}
-
-
 # ConfigureVirtualMachine..........................................................
 
 resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
@@ -365,6 +360,10 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
     time_in_minutes  = 60
     webhook_url      = "https://example.com/webhook"
   }
+}
+
+  output "project-az-workernode03-ip" {
+    value = azurerm_public_ip.project-az-workernode03-ip.ip_address
 }
 
 # #---------------------------------------------------------------------------------------------------------------------------------------------------
