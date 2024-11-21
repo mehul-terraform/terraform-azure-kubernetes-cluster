@@ -306,65 +306,65 @@ resource "azurerm_network_interface" "project-az-workernode03" {
   }
 }
 
-# ConfigureVirtualMachine..........................................................
+# # ConfigureVirtualMachine..........................................................
 
-resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
-  name                = "project-az-workernode03"
-  resource_group_name = azurerm_resource_group.project-az-rg01.name
-  location            = azurerm_resource_group.project-az-rg01.location
-  size                = "Standard_B2s"
-  disable_password_authentication = false
-  admin_username      = "myadmin"
-  admin_password      = "Admin@123456"
-  network_interface_ids = [azurerm_network_interface.project-az-workernode03.id,]
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "ubuntu-24_04-lts"
-    sku       = "server"
-    version   = "latest"
-  }
+# resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
+#   name                = "project-az-workernode03"
+#   resource_group_name = azurerm_resource_group.project-az-rg01.name
+#   location            = azurerm_resource_group.project-az-rg01.location
+#   size                = "Standard_B2s"
+#   disable_password_authentication = false
+#   admin_username      = "myadmin"
+#   admin_password      = "Admin@123456"
+#   network_interface_ids = [azurerm_network_interface.project-az-workernode03.id,]
+#   source_image_reference {
+#     publisher = "Canonical"
+#     offer     = "ubuntu-24_04-lts"
+#     sku       = "server"
+#     version   = "latest"
+#   }
 
-  connection {
-    type     = "ssh"
-    user     = "myadmin"
-    password = "Admin@123456"
-    host     = self.public_ip_address
-  }
+#   connection {
+#     type     = "ssh"
+#     user     = "myadmin"
+#     password = "Admin@123456"
+#     host     = self.public_ip_address
+#   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo wget https://raw.githubusercontent.com/mehul-kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode03.sh",
-      "sudo sh k8s_cluster_workernode03.sh",
-      "sudo wget https://raw.githubusercontent.com/mehul-kubernetes/k8scluster/refs/heads/main/token_workernode03.sh",
-      "sudo sh token_workernode03.sh",
-    ]
-  }
+#   provisioner "remote-exec" {
+#     inline = [
+#       "sudo wget https://raw.githubusercontent.com/mehul-kubernetes/k8scluster/refs/heads/main/k8s_cluster_workernode03.sh",
+#       "sudo sh k8s_cluster_workernode03.sh",
+#       "sudo wget https://raw.githubusercontent.com/mehul-kubernetes/k8scluster/refs/heads/main/token_workernode03.sh",
+#       "sudo sh token_workernode03.sh",
+#     ]
+#   }
   
-  tags = {
-    Name = "project-az-workernode03"
-  }
+#   tags = {
+#     Name = "project-az-workernode03"
+#   }
 
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-}
-  resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode03" {
-  location              = azurerm_resource_group.project-az-rg01.location
-  virtual_machine_id    = azurerm_linux_virtual_machine.project-az-workernode03.id
-  enabled               = true
-  daily_recurrence_time = "1900"  # Time in HHmm format
-  timezone              = "Pacific Standard Time"
-  notification_settings {
-    enabled          = true
-    time_in_minutes  = 60
-    webhook_url      = "https://example.com/webhook"
-  }
-}
+#   os_disk {
+#     caching              = "ReadWrite"
+#     storage_account_type = "Standard_LRS"
+#   }
+# }
+#   resource "azurerm_dev_test_global_vm_shutdown_schedule" "project-az-workernode03" {
+#   location              = azurerm_resource_group.project-az-rg01.location
+#   virtual_machine_id    = azurerm_linux_virtual_machine.project-az-workernode03.id
+#   enabled               = true
+#   daily_recurrence_time = "1900"  # Time in HHmm format
+#   timezone              = "Pacific Standard Time"
+#   notification_settings {
+#     enabled          = true
+#     time_in_minutes  = 60
+#     webhook_url      = "https://example.com/webhook"
+#   }
+# }
 
-  output "project-az-workernode03-ip" {
-    value = azurerm_public_ip.project-az-workernode03-ip.ip_address
-}
+#   output "project-az-workernode03-ip" {
+#     value = azurerm_public_ip.project-az-workernode03-ip.ip_address
+# }
 
 # #---------------------------------------------------------------------------------------------------------------------------------------------------
 # # WorkerNode-04
@@ -412,9 +412,7 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
 #   size                = "Standard_B2s"
 #   admin_username      = "myadmin"
 #   admin_password      = "Admin@123456"
-#   network_interface_ids = [
-#     azurerm_network_interface.project-az-workernode04.id,
-#   ]
+#   network_interface_ids = [azurerm_network_interface.project-az-workernode04.id,]
 #   source_image_reference {
 #     publisher = "MicrosoftWindowsServer"
 #     offer     = "WindowsServer"
@@ -467,6 +465,10 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
 #     time_in_minutes  = 60
 #     webhook_url      = "https://example.com/webhook"
 #   }
+# }
+
+#   output "project-az-workernode04-ip" {
+#     value = azurerm_public_ip.project-az-workernode04-ip.ip_address
 # }
 
 # #-------------------------------------------------------------------------------------------------------------------------------------------------------
