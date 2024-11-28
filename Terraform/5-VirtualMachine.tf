@@ -25,7 +25,7 @@ resource "azurerm_network_interface" "project-az-masternode01" {
     name                          = "project-az-masternode01"
     subnet_id                     = azurerm_subnet.project-az-vm.id
     private_ip_address_allocation = "Static"
-	  private_ip_address            = "172.20.1.10"
+	  private_ip_address            = "172.30.1.10"
     public_ip_address_id          = azurerm_public_ip.project-az-masternode01-ip.id
   }
   
@@ -116,7 +116,7 @@ resource "azurerm_network_interface" "project-az-workernode01" {
     name                          = "project-az-workernode01"
     subnet_id                     = azurerm_subnet.project-az-vm.id
     private_ip_address_allocation = "Static"
-  	private_ip_address            = "172.20.1.11"
+  	private_ip_address            = "172.30.1.11"
     public_ip_address_id          = azurerm_public_ip.project-az-workernode01-ip.id
     
   }
@@ -210,7 +210,7 @@ resource "azurerm_network_interface" "project-az-workernode02" {
     name                          = "project-az-workernode02"
     subnet_id                     = azurerm_subnet.project-az-vm.id
     private_ip_address_allocation = "Static"
-	  private_ip_address            = "172.20.1.12"
+	  private_ip_address            = "172.30.1.12"
     public_ip_address_id          = azurerm_public_ip.project-az-workernode02-ip.id
   }
   tags = {
@@ -298,7 +298,7 @@ resource "azurerm_network_interface" "project-az-workernode03" {
     name                          = "project-az-workernode03"
     subnet_id                     = azurerm_subnet.project-az-vm.id
     private_ip_address_allocation = "Static"
-	  private_ip_address            = "172.20.1.13"
+	  private_ip_address            = "172.30.1.13"
     public_ip_address_id          = azurerm_public_ip.project-az-workernode03-ip.id
   }
    tags = {
@@ -394,7 +394,7 @@ resource "azurerm_network_interface" "project-az-workernode03" {
 #     name                          = "project-az-workernode04"
 #     subnet_id                     = azurerm_subnet.project-az-vm.id
 #     private_ip_address_allocation = "Static"
-# 	  private_ip_address            = "172.20.1.14"
+# 	  private_ip_address            = "172.30.1.14"
 #     public_ip_address_id          = azurerm_public_ip.project-az-workernode04-ip.id
 #   }
   
@@ -416,7 +416,7 @@ resource "azurerm_network_interface" "project-az-workernode03" {
 #   source_image_reference {
 #     publisher = "MicrosoftWindowsServer"
 #     offer     = "WindowsServer"
-#     sku       = "2016-Datacenter"
+#     sku       = "3016-Datacenter"
 #     version   = "latest"
 #   }
   
