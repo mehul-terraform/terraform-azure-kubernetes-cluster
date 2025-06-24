@@ -8,6 +8,7 @@ resource "azurerm_public_ip" "project-az-masternode01-ip" {
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
   allocation_method   = "Dynamic"
+  sku                 = "Basic"
 
   tags = {
     Name = "project-az-masternode01-ip"
@@ -100,7 +101,7 @@ resource "azurerm_public_ip" "project-az-workernode01-ip" {
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
   allocation_method   = "Dynamic"
-  
+  sku                 = "Basic"
   tags = {
     environment = "project-az-workernode01-ip"
   }
@@ -192,6 +193,7 @@ resource "azurerm_public_ip" "project-az-workernode02-ip" {
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
   allocation_method   = "Dynamic"
+  sku                 = "Basic"
   tags = {
     environment = "project-az-workernode02-ip"
   }
@@ -283,6 +285,7 @@ resource "azurerm_public_ip" "project-az-workernode03-ip" {
   location            = azurerm_resource_group.project-az-rg01.location
   resource_group_name = azurerm_resource_group.project-az-rg01.name
   allocation_method   = "Dynamic"
+  sku                 = "Basic"
   tags = {
     Name = "project-az-workernode03-ip"
   }
@@ -377,6 +380,7 @@ resource "azurerm_linux_virtual_machine" "project-az-workernode03" {
 #   location            = azurerm_resource_group.project-az-rg01.location
 #   resource_group_name = azurerm_resource_group.project-az-rg01.name
 #   allocation_method   = "Dynamic"
+#   sku                 = "Basic"
 
 #   tags = {
 #     Name = "project-az-workernode04-ip"
